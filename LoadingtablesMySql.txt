@@ -1,0 +1,23 @@
+STEP 1: Login to mysql 
+$ mysql -u root -p (enter)
+Enter the password: password
+
+STEP 2: Create the database
+mysql> create database devsh_loudacre;
+
+mysql> quit;
+
+STEP 3: Run the script file
+
+cd Desktop/
+
+ mysql -u root -p devsh_loudacre < devsh_loudacre.sql
+Enter the password:
+
+STEP 4: Test the tables
+$ mysql -u root -p (enter)
+
+mysql> use devsh_loudacre;
+mysql> show tables;
+
+
