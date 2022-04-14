@@ -1,0 +1,24 @@
+Login to mysql and into devsh_loudacre database and check the number of rows of the table called "device"
+
+$ mysql -u root -p
+
+mysql> use devsh_loudacre;
+
+mysql> select count(*) from device;
+
+mysql> quit;
+
+____________________________________________________________
+
+$ sqoop help
+
+$ sqoop list-databases --connect jdbc:mysql://ubh01 --username root --password password
+
+$ sqoop list-tables --connect jdbc:mysql://ubh01/devsh_loudacre  --username root  --password password
+
+$ sqoop import --connect jdbc:mysql://ubh01/devsh_loudacre  --table device --fields-terminated-by '\t' --username root  
+  --password pasword
+
+$ hdfs dfs -ls device
+
+$ hdfs dfs -tail device/part-m-00000
