@@ -1,0 +1,117 @@
+PERFORM THE FOLLOWING FIRST:
+
+create 2 seperate directories by name emp,dept and put emp.txt into emp, dept.txt into dept.
+
+1.
+hdfs dfs -mkdir emp
+hdfs dfs -put /home/training/Desktop/prac_hive/payroll/emp.txt emp
+
+
+hdfs dfs -mkdir dept
+hdfs dfs -put /home/training/Desktop/prac_hive/payroll/dept.txt dept
+
+
+_____________________________________________________________________
+
+2. Create metastore tables for emp, and dept.
+
+launch beeline:
+
+beeline -u jdbc:hive2://localhost:10000/default -n training
+
+create external table emp(empno int,ename string,job string,mgr int,hiredate string,salary int,comm int,deptno int)
+row format delimited
+fields terminated by '/'
+location '/user/training/emp';
+
+describe emp;
+
+describe formatted emp;
+
+select * from emp;
+
+__________________________________________
+
+create external table dept(deptno int,dname string,loc string)
+row format delimited
+fields terminated by ','
+location '/user/training/dept';
+
+select * from dept;
+
+____________________________________________
+
+Now we will create salgrade table in other way.
+
+check : hdfs dfs -ls /user/training (check whether there is a directory by name salgrade or not, it must not be there).
+
+
+at beeline (launch if not)
+
+create external table salgrade(grade int,losal int,hisal int)
+row format delimited
+fields terminated by ','
+location '/user/training/salgrade';
+
+Now again check hdfs dfs -ls /user/training (this time you will find salgrade directory automatically created)
+
+Now query: select * from salgrade;
+
+Now: hdfs dfs -put /home/training/Desktop/prac_hive/payroll/salgrade.txt /user/training/salgrade
+
+select * from salgrade;
+
+_________________________________________________________________________________________________
+
+
+3. Find out employees with salary greater than 2000 from emp.
+
+select * from emp where salary > 2000;
+
+
+
+4. Filter employees whose name starts with 'A'
+
+select * from emp where ename like 'A%';
+
+6. Filter employees whose name starts with second character as 'A' in continuation to above.
+
+select * from emp where ename like '_A%';
+
+7. Filter employees who belongs to department number 20 and with job 'CLERK'
+
+select * from emp where deptno=20 and job='CLERK';
+
+
+8. Display empno,ename, salary,deptno and department name using join.
+
+select e.empno,e.ename,e.salary,e.deptno,d.dname from emp e join dept d on e.deptno=d.deptno;
+
+9. Find out department wise total sum of salaries of all employees;
+
+select deptno,sum(salary) from emp group by deptno;
+
+10. Display ename,sal and his annual salary and print in desc order of annual salaries.
+
+select ename,salary,salary*12 as annsal from emp order by salary*12 desc;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
